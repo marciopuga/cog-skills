@@ -64,7 +64,7 @@ For IDE agents (Cursor, Windsurf, Cowork), invoke skills manually when things fe
 
 ## Docs
 
-[cog.puga.com.br](https://cog.puga.com.br)
+[lab.puga.com.br/cog](https://lab.puga.com.br/cog/)
 
 ## License
 
