@@ -1,6 +1,6 @@
 # Cog Skills
 
-Agent skills for the [Cog](https://github.com/marciopuga/cog) plain-text memory system. Distributed as [SKILL.md](https://agentskills.io/specification) files via [skills.sh](https://skills.sh).
+Agent skills for [Cog](https://github.com/marciopuga/cog) — one memory, not one per tool. A structured, plain-text memory layer shared across all your AI agents and projects. Distributed as [SKILL.md](https://agentskills.io/specification) files via [skills.sh](https://skills.sh).
 
 ## Skills
 
