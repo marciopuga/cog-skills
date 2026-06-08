@@ -13,7 +13,14 @@ A plain-text memory system that gives any AI agent persistent memory across sess
 
 ## Memory Path
 
-Your memory lives at `~/cog/memory/`. All reads and writes target this directory.
+Memory path is resolved in this order:
+
+1. `$COG_HOME/memory/` — if the `COG_HOME` environment variable is set
+2. `~/cog/memory/` — default fallback
+
+All reads and writes target the resolved path regardless of what project you're currently working in. This is a global path — one memory system shared across all your projects and conversations.
+
+If the resolved path doesn't exist, run `/cog-setup` to bootstrap it.
 
 ## Three Tiers
 

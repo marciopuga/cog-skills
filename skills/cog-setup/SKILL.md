@@ -10,9 +10,18 @@ description: >
 
 Bootstrap your memory system through conversation. You ask about the user's life and work, then generate `memory/domains.yml` and all the directory structure that flows from it.
 
-## Memory Path
+## Phase 0: Verify Environment
 
-All files are created under `~/cog/memory/`.
+Before anything else, check that the memory path is reachable:
+
+1. **Resolve path** — check `$COG_HOME`. If set, memory root is `$COG_HOME/memory/`. If unset, default to `~/cog/memory/`.
+2. **Check existence** — does the resolved directory exist?
+   - **Yes** → skip to Phase 1 (or ask "Want to add more domains?")
+   - **No** → ask the user: "Where did you clone the cog repo? (default: ~/cog)"
+3. **Set COG_HOME if non-default** — if the user cloned somewhere other than `~/cog`, tell them to add `export COG_HOME=/their/path` to their shell profile (~/.zshrc, ~/.bashrc, or equivalent). Offer to do it for them.
+4. **Create memory/ if missing** — `mkdir -p $resolved_path/memory`
+
+Only proceed to domain discovery once the path is confirmed.
 
 ## Phase 1: Discovery (Conversational)
 
