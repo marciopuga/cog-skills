@@ -91,6 +91,29 @@ memory/
 5. **Entities**: 3-line compact registry. `### Name (relationship)` / pipe-separated facts / `status: active | last: YYYY-MM-DD`
 6. **Hot memory <50 lines**: Prune aggressively, detail goes in observations
 7. **Single Source of Truth (SSOT)**: Each fact in ONE canonical file. Others reference via `[[link]]`.
+8. **Temporal validity**: Time-bounded facts SHOULD carry an expiry marker (see below).
+
+## Temporal Validity Markers
+
+Facts with a natural expiry (upcoming events, temporary states, countdowns) should carry an inline marker:
+
+```markdown
+- HydroTap repair — chiller removed, reinstall in 1-2 weeks <!-- until:2026-06-20 grace:5 -->
+- Leflunomide 3-month review Thu 18 Jun <!-- until:2026-06-18 grace:14 -->
+- New job started at Acme <!-- from:2026-03-01 -->
+```
+
+**Marker types:**
+- `<!-- until:YYYY-MM-DD -->` — expires on this date. Housekeeping archives after expiry.
+- `<!-- until:YYYY-MM-DD grace:N -->` — expires N days after the `until` date (buffer for follow-up).
+- `<!-- from:YYYY-MM-DD -->` — stable since this date. Never expires, documents when something became true.
+
+**Rules:**
+- Stable facts (DOB, role, relationships) need no marker
+- Only mark facts that will become irrelevant after a date
+- Housekeeping sweeps expired markers → moves to glacier or deletes
+- Use absolute dates, never computed counts ("since Jan 27" not "Day 42")
+- Grace period = buffer for the fact to still matter after the event (e.g., a medical review result may take 2 weeks to act on)
 
 ## File Edit Patterns
 
@@ -213,3 +236,30 @@ Distilled rules from 3+ observations on the same theme. Timeless, actionable, no
 
 - **Core** (`cog-meta/patterns.md`): universal rules, ≤70 lines. Loaded every turn.
 - **Satellite** (`{domain}/patterns.md`): domain-specific, soft cap 30 lines. Loaded when domain activates.
+
+## Scheduling: Consolidated Pulses
+
+When automating memory maintenance (cron, scheduled tasks, or manual batch runs), **run skills in the same session** rather than as separate isolated invocations.
+
+### Why
+
+Separate runs re-read all context from scratch and can't see what the prior skill modified. Hand-off files between runs drift and add complexity. Running housekeeping → reflect in one session means reflect sees what housekeeping just cleaned — no handoff needed.
+
+### Recommended Groupings
+
+| Pulse | Skills (in order) | Cadence | Rationale |
+|-------|-------------------|---------|-----------|
+| **Maintenance** | housekeeping → reflect | Weekly | Reflect sees cleaned state; promotions land in freshly-pruned files |
+| **Architecture** | evolve (standalone) | Monthly | Audits the rules that housekeeping/reflect follow |
+| **Strategic** | foresight (standalone) | Weekly | Read-only scan, writes one nudge file |
+
+### Anti-Pattern: Nightly Everything
+
+Running all skills every night is theatrical — it generates reports nobody reads and logs the same issues repeatedly without resolving them. Better cadence:
+- **Weekly**: housekeeping + reflect (consolidated)
+- **Monthly**: evolve (audit + auto-route)
+- **Weekly or on-demand**: foresight
+
+### Hand-Off Principle
+
+Within a consolidated pulse, phases share context naturally (same conversation). Between pulses (e.g., evolve reading reflect's output), the contract is through FILES — `patterns.md`, `action-items.md`, `self-observations.md`. No separate state files needed.

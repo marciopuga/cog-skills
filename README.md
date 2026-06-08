@@ -46,19 +46,23 @@ Install pipeline skills and run them on a schedule:
 ```bash
 npx skills add marciopuga/cog-skills --skill cog-reflect
 npx skills add marciopuga/cog-skills --skill cog-housekeeping
+npx skills add marciopuga/cog-skills --skill cog-evolve
 ```
 
-Schedule with cron (using any CLI agent's headless mode):
+Schedule with cron (using any CLI agent's headless mode). **Run housekeeping → reflect in the same session** so reflect sees freshly-pruned state:
 
 ```bash
-# Claude Code
-0 23 * * 0  claude -p "/cog-housekeeping"
-0  0 * * 0  claude -p "/cog-reflect"
+# Claude Code — weekly maintenance pulse (consolidated)
+0 23 * * 0  claude -p "/cog-housekeeping then /cog-reflect"
 
-# Codex
-0 23 * * 0  codex exec "/cog-housekeeping"
-0  0 * * 0  codex exec "/cog-reflect"
+# Monthly architecture audit
+0  1 1 * *  claude -p "/cog-evolve"
+
+# Codex — weekly maintenance pulse
+0 23 * * 0  codex exec "/cog-housekeeping then /cog-reflect"
 ```
+
+**Anti-pattern:** Running all skills every night. This generates reports nobody reads and logs the same issues repeatedly. Weekly maintenance + monthly audit is enough.
 
 For IDE agents (Cursor, Windsurf, Cowork), invoke skills manually when things feel stale.
 

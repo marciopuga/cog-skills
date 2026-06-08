@@ -66,17 +66,46 @@ Systematic contradiction detection:
 3. **Temporal validity check**: Scan entities for `(since YYYY-MM)` >6 months (flag for review) and `(until YYYY-MM)` past dates (add strikethrough).
 4. **Cross-domain entity check**: Same person in multiple entity files → one canonical, others pointer.
 
-### 3. Consolidation
+### 3. Consolidation (Condition Pipeline)
 
-**Observation → Pattern promotion:**
-- Scan observations for clusters of 3+ entries on the same theme
-- Distill into a pattern → add to `cog-meta/patterns.md` (or domain `patterns.md` if domain-specific)
-- Don't delete observations — they stay as raw record
+Rigorous observation → pattern promotion. Three gates prevent noise from entering pattern files.
+
+**Gate 1: Cluster Detection**
+
+Scan all `observations.md` files. Group entries by primary tag. A cluster is promotable when ALL conditions are met:
+- ≥3 entries with the same primary tag
+- Entries span ≥7 days (not a single-day burst)
+- ≥3 distinct dates (not the same insight repeated on one day)
+- Tag is specific (reject broad tags: "work", "home", "general", "misc")
+
+**Gate 2: Coverage Check**
+
+Before promoting, check if the pattern ALREADY EXISTS:
+- Read `cog-meta/patterns.md` and any domain satellite `patterns.md`
+- If an existing pattern already covers this cluster's insight → skip (not a gap)
+- If the new insight SUBSUMES an existing pattern (broader, more accurate) → plan to REPLACE the old one
+
+**Gate 3: Synthesis & Write**
+
+For each uncovered cluster:
+- Distill into one actionable, timeless pattern line
+- Style-match against existing patterns (same voice, same structure)
+- Add `<!-- promoted:YYYY-MM-DD theme:tag -->` audit trail at the end of the line
+- Write to `cog-meta/patterns.md` (universal) or `{domain}/patterns.md` (domain-specific)
+- If replacing an existing pattern, remove the old line and add the new one
+
+**Replacement is healthy** — patterns evolve. A new pattern that subsumes 2 older ones should replace both. Track replacements in debrief.
 
 **Pattern file caps:**
 - Core `patterns.md`: hard limit 70 lines / 5.5KB — universal rules only
 - Satellite files: soft cap 30 lines each
-- If near cap: compress (merge overlapping rules, drop examples)
+- If near cap: merge overlapping rules or replace weaker patterns. Never just truncate.
+
+**Spike Detection (below promotion bar):**
+
+Clusters with ≥5 entries in <7 days don't meet the 7-day span requirement. But they signal a heating topic:
+- Note in debrief as "Spike: [tag] — [N] entries in [N] days"
+- These are thread-raising candidates (see Step 5)
 
 **Hot-memory relevance:**
 - **Promote**: Pattern heating up → add to hot-memory

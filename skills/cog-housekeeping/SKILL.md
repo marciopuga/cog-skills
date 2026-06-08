@@ -68,7 +68,25 @@ Review all `action-items.md` across every domain:
 - **Health escalation** (open >6 months): flag with urgency
 - **Birthday prep** (<2 weeks away): pull interests, suggest ideas
 
-### 4. Rebuild Glacier Index
+### 4. Temporal Validity Sweep
+
+Scan ALL memory files (hot-memory, action-items, entities, threads) for `<!-- until:YYYY-MM-DD -->` and `<!-- until:YYYY-MM-DD grace:N -->` markers:
+
+1. **Compute expiry**: `until_date + grace_days` (grace defaults to 0)
+2. **If expired**: remove the line from its current file
+   - If the line has lasting value → append to `observations.md` with `[archived]` tag
+   - If purely temporal (event countdown, temporary state) → discard
+3. **If expiring within 7 days**: leave in place but add to debrief as "expiring soon"
+
+This is deterministic — no judgment needed. Date math only.
+
+**Do NOT touch `<!-- from:YYYY-MM-DD -->` markers** — those are stable-since markers and never expire.
+
+### 5. Rebuild Indexes (Deterministic)
+
+Rebuild ALL indexes from source of truth — no LLM judgment, pure data extraction.
+
+**5a. Glacier Index**
 
 Scan `memory/glacier/**/*.md`, extract YAML frontmatter, write `memory/glacier/index.md`:
 
@@ -81,25 +99,38 @@ Scan `memory/glacier/**/*.md`, extract YAML frontmatter, write `memory/glacier/i
 |------|--------|------|------|------------|---------|---------|
 ```
 
-### 5. Link Audit
+**5b. Domain INDEX.md files**
+
+For each domain directory, read every `.md` file's `<!-- L0: ... -->` header and write `memory/{domain}/INDEX.md`:
+
+```markdown
+# {Domain} Index
+<!-- Auto-generated from L0 headers. Do not edit. -->
+<!-- Last updated: YYYY-MM-DD -->
+
+| File | Summary |
+|------|---------|
+| hot-memory.md | Current state and priorities |
+| observations.md | Timestamped events and learnings |
+```
+
+**Key principle**: These indexes are DETERMINISTIC — computed from L0 headers that already exist. If a file has no L0 header, list it with summary "(no L0 header — needs one)". Never invent summaries; just reflect what's there.
+
+This prevents index drift — the failure mode where LLM-generated indexes silently go stale because the generation step was skipped or failed.
+
+### 6. Link Audit
 
 For each non-glacier memory file:
 1. Entity mentions matching `### Name` headers → add `[[links]]` if missing
 2. Cross-domain references → add cross-domain links
 3. Action item references → link observations to tasks
 
-### 6. Entity Format Enforcement
+### 7. Entity Format Enforcement
 
 Scan all `entities.md`:
 1. **3-line max**: Entries >3 lines → compress or flag for thread promotion
 2. **Glacier candidates**: Inactive >6 months → move to glacier (leave stub)
 3. **Missing metadata**: Flag entries without `status:` or `last:` fields
-
-### 7. Temporal Fact Maintenance
-
-Scan entities for `(until YYYY-MM)` with past dates:
-1. No strikethrough → add it
-2. Already struck through → move to `## Historical` subsection
 
 ### 8. Rebuild Link Index
 
