@@ -22,6 +22,8 @@ All reads and writes target the resolved path regardless of what project you're 
 
 If the resolved path doesn't exist, run `/cog-setup` to bootstrap it.
 
+**Tip:** If you want to access your Cog memory from any project without installing this skill everywhere, consider asking your agent to create a global slash command (e.g. `/cog`) that reads and writes to your memory path. How that works depends on your agent — ask it to set one up for you.
+
 ## Three Tiers
 
 | Tier | Where | Loaded | Size limit | Edit mode |
