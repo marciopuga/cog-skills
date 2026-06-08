@@ -15,27 +15,19 @@ Agent skills for the [Cog](https://github.com/marciopuga/cog) plain-text memory 
 
 ## Quick Start
 
-**Claude Code** — skills are pre-installed in the [cog repo](https://github.com/marciopuga/cog). Just clone and go:
-
 ```bash
 git clone https://github.com/marciopuga/cog ~/cog
 cd ~/cog
-claude
-# Run /setup to bootstrap your domains
+npx skills add marciopuga/cog-skills
 ```
 
-**Other agents** — install skills into your agent's native format:
+Start your agent and run `/setup` to bootstrap your domains. Works with any supported agent — `npx skills add` auto-detects the agent and installs skills into its native format.
 
-```bash
-git clone https://github.com/marciopuga/cog ~/cog
-cd ~/cog
-npx skills add marciopuga/cog-skills --skill cog-memory
-npx skills add marciopuga/cog-skills --skill cog-setup
-```
+**One folder, many projects.** `~/cog` is your agent's single brain. Don't scaffold memory inside each project — that fragments your context. One place where everything connects.
 
 ## Supported Agents
 
-- Claude Code (pre-installed)
+- Claude Code
 - Codex (OpenAI)
 - Cursor
 - Windsurf
@@ -46,16 +38,7 @@ npx skills add marciopuga/cog-skills --skill cog-setup
 
 ## Optional: Automated Maintenance
 
-Pipeline skills come pre-installed for Claude Code. For other agents, install from `~/cog`:
-
-```bash
-cd ~/cog
-npx skills add marciopuga/cog-skills --skill cog-reflect
-npx skills add marciopuga/cog-skills --skill cog-housekeeping
-npx skills add marciopuga/cog-skills --skill cog-evolve
-```
-
-Schedule with cron. **Run housekeeping → reflect in the same session** so reflect sees freshly-pruned state:
+Schedule pipeline skills with cron. **Run housekeeping → reflect in the same session** so reflect sees freshly-pruned state:
 
 ```bash
 # Weekly maintenance pulse (consolidated)
@@ -65,7 +48,7 @@ Schedule with cron. **Run housekeeping → reflect in the same session** so refl
 0  1 1 * *  cd ~/cog && claude -p "/evolve"
 ```
 
-**Anti-pattern:** Running all skills every night. This generates reports nobody reads and logs the same issues repeatedly. Weekly maintenance + monthly audit is enough.
+**Anti-pattern:** Running all skills every night. Weekly maintenance + monthly audit is enough.
 
 For IDE agents (Cursor, Windsurf, Cowork), invoke skills manually when things feel stale.
 
