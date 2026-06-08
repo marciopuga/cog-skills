@@ -77,9 +77,9 @@ This is the critical difference between theatrical evolve (reporting problems) a
 | `patterns.md` line ratio > 1.0 | Exceeds 70 lines | → `cog-meta/action-items.md`: "Merge or replace patterns to bring below 70 lines" |
 | Satellite pattern file > 30 lines | Exceeds soft cap | → domain `action-items.md`: "Compress {domain} patterns" |
 | Entity compression > 3.0 | Entries too verbose | → domain `action-items.md`: "Compress entities or promote to threads" |
-| Hot-memory > 50 lines | Exceeds cap | → `action-items.md`: "Prune hot-memory (run /cog-housekeeping)" |
-| INDEX.md > 14 days stale | Drift risk | → `cog-meta/action-items.md`: "Rebuild domain indexes (run /cog-housekeeping)" |
-| Expired temporal markers > 0 | Stale facts | → `cog-meta/action-items.md`: "Sweep expired temporal markers (run /cog-housekeeping)" |
+| Hot-memory > 50 lines | Exceeds cap | → `action-items.md`: "Prune hot-memory (run /housekeeping)" |
+| INDEX.md > 14 days stale | Drift risk | → `cog-meta/action-items.md`: "Rebuild domain indexes (run /housekeeping)" |
+| Expired temporal markers > 0 | Stale facts | → `cog-meta/action-items.md`: "Sweep expired temporal markers (run /housekeeping)" |
 | Same issue logged 3+ times in self-observations | Recurring unresolved | → Escalate: propose rule change that prevents recurrence |
 
 **Format for auto-routed items:**

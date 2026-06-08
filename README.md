@@ -6,8 +6,7 @@ Agent skills for the [Cog](https://github.com/marciopuga/cog) plain-text memory 
 
 | Skill | What it does |
 |-------|-------------|
-| **cog-memory** | Core conventions (L0 headers, three tiers, SSOT, temporal validity) |
-| **cog-setup** | Interactive domain bootstrap |
+| **cog** | Core memory system — conventions, setup, and domain bootstrap (required) |
 | **cog-reflect** | Condition pipeline — 3-gate observation → pattern promotion |
 | **cog-housekeeping** | Archive, prune, deterministic indexes, temporal sweep |
 | **cog-evolve** | Audit architecture, auto-route threshold breaches |
@@ -21,7 +20,7 @@ cd ~/cog
 npx skills add marciopuga/cog-skills
 ```
 
-Start your agent and run `/setup` to bootstrap your domains. Works with any supported agent — `npx skills add` auto-detects the agent and installs skills into its native format.
+Start your agent and run `/cog` to bootstrap your domains. Works with any supported agent — `npx skills add` auto-detects the agent and installs skills into its native format.
 
 **One folder, many projects.** `~/cog` is your agent's single brain. Don't scaffold memory inside each project — that fragments your context. One place where everything connects.
 
