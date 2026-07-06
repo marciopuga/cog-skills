@@ -7,10 +7,12 @@ Agent skills for [Cog](https://github.com/marciopuga/cog) — one memory, not on
 | Skill | What it does |
 |-------|-------------|
 | **cog** | Core memory system — conventions, setup, and domain bootstrap (required) |
-| **cog-reflect** | Condition pipeline — 3-gate observation → pattern promotion |
+| **cog-reflect** | Condition pipeline — 3-gate observation → pattern promotion, scenario retrospectives |
 | **cog-housekeeping** | Archive, prune, deterministic indexes, temporal sweep |
 | **cog-evolve** | Audit architecture, auto-route threshold breaches |
-| **cog-foresight** | Cross-domain strategic nudge |
+| **cog-foresight** | Cross-domain strategic nudge, flags scenario candidates |
+| **cog-history** | Deep memory search — piece together a narrative across files |
+| **cog-scenario** | Decision simulation — branch a decision into 2-3 modeled paths |
 
 ## Quick Start
 
@@ -41,11 +43,13 @@ Schedule pipeline skills with cron. **Run housekeeping → reflect in the same s
 
 ```bash
 # Weekly maintenance pulse (consolidated)
-0 23 * * 0  cd ~/cog && claude -p "/housekeeping then /reflect"
+0 23 * * 0  cd "${COG_HOME:-$HOME/cog}" && claude -p "/cog-housekeeping then /cog-reflect"
 
 # Monthly architecture audit
-0  1 1 * *  cd ~/cog && claude -p "/evolve"
+0  1 1 * *  cd "${COG_HOME:-$HOME/cog}" && claude -p "/cog-evolve"
 ```
+
+(In the [cog repo](https://github.com/marciopuga/cog) itself, the vendored skills use unprefixed names: `/housekeeping then /reflect`.)
 
 **Anti-pattern:** Running all skills every night. Weekly maintenance + monthly audit is enough.
 
