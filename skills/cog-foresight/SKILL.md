@@ -51,7 +51,7 @@ Classify active items:
 - **Accelerating** — multiple updates last week. Signal: ride the wave.
 - **Cruising** — steady progress. Signal: nothing to flag.
 - **Stalling** — no movement 2+ weeks. Signal: blocked or lost priority?
-- **Dormant** — domain silence 4+ weeks. Signal: conscious or drift?
+- **Unlogged 4+ weeks** — no *entries* in 4+ weeks. Signal: check a live source (DMs, calendar, tickets) before drawing any conclusion. ⚠️ Never label a domain "dormant" or "stalled" from entry dates alone — memory metadata measures logging, not activity. If the live source shows activity, the finding is a logging gap; only call it dormant if that source is *also* quiet, and say which source you checked.
 
 ### 3. Timing Awareness
 

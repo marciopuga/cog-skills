@@ -64,7 +64,7 @@ Keep ALL `hot-memory.md` files under 50 lines.
 
 Review all `action-items.md` across every domain:
 - **Stale items** (open >2 weeks): list with age and suggested action
-- **Dormant domains** (0 observations in >4 weeks): flag
+- **Low-logging domains** (0 observations in >4 weeks): flag as a **logging** gap, not an activity gap. Write "no entries since YYYY-MM-DD" — never "dormant", "stalled" or "unowned". Entry dates and file mtimes measure *what got written down*, not what happened; work that happens in DMs, calls or any unlogged channel is invisible this way. Only conclude dormancy after checking a live source, and name the source you checked.
 - **Health escalation** (open >6 months): flag with urgency
 - **Birthday prep** (<2 weeks away): pull interests, suggest ideas
 
