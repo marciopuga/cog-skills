@@ -7,7 +7,7 @@ Agent skills for [Cog](https://github.com/marciopuga/cog) — one memory, not on
 | Skill | What it does |
 |-------|-------------|
 | **cog** | Core memory system — conventions, setup, and domain bootstrap (required) |
-| **cog-reflect** | Condition pipeline — 3-gate observation → pattern promotion, scenario retrospectives |
+| **cog-reflect** | Consolidate observations into patterns (3 gates), fix contradictions, raise threads, close scenarios — weekly, same session as housekeeping |
 | **cog-housekeeping** | Archive, prune, deterministic indexes, temporal sweep |
 | **cog-foresight** | Cross-domain strategic nudge, flags scenario candidates |
 | **cog-history** | Deep memory search — piece together a narrative across files |
